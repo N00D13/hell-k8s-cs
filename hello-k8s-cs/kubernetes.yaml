@@ -1,0 +1,33 @@
+﻿apiVersion: v1
+kind: Service
+metadata:
+  name: hello-k8s-cs
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 5000
+  - port: 443
+    targetPort: 5001
+  selector:
+    app: hello-k8s-cs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-k8s-cs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-k8s-cs
+  template:
+    metadata:
+      labels:
+        app: hello-k8s-cs
+    spec:
+      containers:
+      - name: hello-k8s-cs
+        image: alexohneander/hello-k8s-cs
+        ports:
+        - containerPort: 8080
