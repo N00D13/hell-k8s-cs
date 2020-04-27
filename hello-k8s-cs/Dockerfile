@@ -9,9 +9,9 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["hello-k8s-cs.csproj", "hello-k8s-cs/"]
 RUN dotnet restore "hello-k8s-cs/hello-k8s-cs.csproj"
-COPY ./ ./
+COPY . "hello-k8s-cs/"
 WORKDIR "/src/hello-k8s-cs"
-RUN dotnet build "hello-k8s-cs.csproj" -c Release -o /app/out
+RUN dotnet build "hello-k8s-cs.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "hello-k8s-cs.csproj" -c Release -o /app/publish
